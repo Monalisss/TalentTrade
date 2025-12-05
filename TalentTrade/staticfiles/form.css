@@ -1,0 +1,169 @@
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* White box that contains the form */
+.form-container {
+    max-width: 450px;
+    margin: 80px auto;
+    padding: 40px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Title (Login / Register) */
+.form-container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+/* Each form field is wrapped in <p> tags */
+.form-container form p {
+    margin-bottom: 20px;
+}
+
+/* Labels (Username, Password, etc.) */
+.form-container label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* Input boxes (username, password fields) */
+.form-container input[type="text"],
+.form-container input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+    box-sizing: border-box;
+}
+
+/* When you click in an input (focus) */
+.form-container input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(49, 20, 40, 0.1);
+}
+
+/* Help text (like password requirements) */
+.form-container .helptext {
+    display: block;
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+}
+
+/* Remove bullet points from help text */
+.form-container .helptext ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 5px 0;
+}
+
+.form-container .helptext li {
+    padding: 3px 0;
+    font-size: 11px;
+}
+
+/* Error messages (when you type wrong password, etc.) */
+.form-container .errorlist {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0 0;
+}
+
+.form-container .errorlist li {
+    background-color: #fee;
+    color: #c33;
+    padding: 10px 12px;
+    border-radius: 5px;
+    border-left: 4px solid #c33;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+/* General form errors */
+.form-container ul.errorlist.nonfield {
+    background-color: #fee;
+    color: #c33;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 4px solid #c33;
+}
+
+/* Submit button */
+.form-container .submit-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 10px;
+}
+
+/* Button hover effect */
+.form-container .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+}
+
+/* Button when clicked */
+.form-container .submit-btn:active {
+    transform: translateY(0);
+}
+
+/* Footer links (Don't have an account? etc.) */
+.form-footer {
+    text-align: center;
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.form-footer p {
+    color: #666;
+    font-size: 14px;
+}
+
+.form-footer a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.form-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Make it look good on phones */
+@media (max-width: 600px) {
+    .form-container {
+        margin: 20px;
+        padding: 25px;
+    }
+    
+    .form-container h2 {
+        font-size: 22px;
+    }
+}
+

@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Talent Marketplace</title>
+    <link rel="stylesheet" href="{% static 'navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'base.css' %}">
+
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'add_talent' %}">Post Talent</a>
+        <a href="{% url 'user_account' %}">My Account</a>
+        <a href ="{% url 'inbox' %}">Inbox</a>
+
+    </nav>
+
+    <!-- Login/Logout Section -->
+    <div class="auth-section">
+        {% if user.is_authenticated %}
+            <!-- User is logged in -->
+            <span class="welcome-msg">Bună, {{ user.username }}!</span>
+            <a href="{% url 'logout' %}" class="auth-link">
+                <span>Logout</span>
+            </a>
+        {% else %}
+            <!-- User is NOT logged in -->
+            <a href="{% url 'login' %}" class="auth-link">
+                <span>Login</span>
+            </a>
+            <a href="{% url 'register' %}" class="auth-link">
+                <span>Sign Up</span>
+            </a>
+        {% endif %}
+    </div>
+
+    <!-- Messages (for success/error notifications) -->
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    
+    <!-- Main Content Area -->
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

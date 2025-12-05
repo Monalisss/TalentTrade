@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'inbox.css' %}">
+
+<div class="inbox-container">
+    <h2>📬 Inbox</h2>
+
+    {% if conversations %}
+        {% for convo in conversations %}
+            <a href="{% url 'chat' convo.user.id %}" class="conversation-item">
+                <div class="conversation-info">
+                    <span class="username">{{ convo.user.username }}</span>
+                    <span class="last-message">{{ convo.last_message.content|truncatechars:40 }}</span>
+                </div>
+                <div class="conversation-meta">
+                    <span class="time">{{ convo.last_message.timestamp|timesince }} ago</span>
+                    {% if convo.unread_count > 0 %}
+                        <span class="unread-badge">{{ convo.unread_count }}</span>
+                    {% endif %}
+                </div>
+            </a>
+        {% endfor %}
+    {% else %}
+        <p>No conversations yet!</p>
+    {% endif %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'form.css' %}">
+
+<div class="form-container">
+    <h2>Edit Your Profile</h2>
+    
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <!-- Bio -->
+        <div class="form-group">
+            <label>About You:</label>
+            {{ form.bio }}
+        </div>
+        
+        <!-- Phone -->
+        <div class="form-group">
+            <label>Phone Number:</label>
+            {{ form.phone_number }}
+        </div>
+        
+        <!-- Photo -->
+        <div class="form-group">
+            <label >Profile Photo:</label>
+            
+            {% if form.instance.photo %}
+                <div class="current-photo">
+                    <img src="{{ form.instance.photo.url }}" alt="Current photo" 
+                    style="width: 120px; height: 120px; 
+                    object-fit: cover; border-radius: 20%;">
+                    <p>Current photo</p>
+                </div>
+            {% endif %}
+            
+            {{ form.photo }}
+        </div>
+        
+        <!-- Buttons -->
+        <button type="submit" class="btn-save">Save Changes</button>
+        <a href="{% url 'user_account' %}" class="btn-cancel">Cancel</a>
+    </form>
+</div>
+
+{% endblock %}

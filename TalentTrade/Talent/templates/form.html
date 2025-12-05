@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'form.css' %}">
+
+<div class="form-container">
+    <!-- Dynamic title: shows "Login" or "Register" -->
+    {% if 'register' in request.path %}
+        <h2>Creează Cont Nou</h2>
+    {% else %}
+        <h2>Conectează-te</h2>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <!-- Show any general form errors -->
+        {% if form.non_field_errors %}
+            <ul class="errorlist nonfield">
+                {% for error in form.non_field_errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        
+        <!-- The form fields (Django generates these) -->
+        {{ form.as_p }}
+        
+        <!-- Submit button with dynamic text -->
+        <button type="submit" class="submit-btn">
+            {% if 'register' in request.path %}
+                Înregistrează-te
+            {% else %}
+                Conectează-te
+            {% endif %}
+        </button>
+    </form>
+
+    <!-- Link to switch between login/register -->
+    <div class="form-footer">
+        {% if 'register' in request.path %}
+            <p>Ai deja cont? <a href="{% url 'login' %}">Conectează-te aici</a></p>
+        {% else %}
+            <p>Nu ai cont? <a href="{% url 'register' %}">Înregistrează-te aici</a></p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

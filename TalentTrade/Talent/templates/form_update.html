@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'form.css' %}">
+    
+    <div class="form-container">
+        <h1>Edit Your Talent</h1>
+
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Update Talent</button>
+        </form>
+
+        <div class="back-link">
+            <a href="{% url 'user_account' %}">← Back to My Account</a>
+        </div>
+    </div>
+{% endblock %}

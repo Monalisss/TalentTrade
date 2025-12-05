@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'home_page.css' %}">
+
+<div class="home-container">
+    
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <h1>🌟 Discover Amazing Talents</h1>
+        <p>Connect with skilled freelancers for your next project</p>
+    </div>
+    
+    <!-- Filter Section -->
+    <div class="filter-section">
+        <form method="get" class="filter-form">
+            <div class="filter-group">
+                {{ filterset.form.category.label_tag }}
+                {{ filterset.form.category }}
+            </div>
+            
+            <div class="filter-buttons">
+                <button type="submit" class="btn-filter">
+                    🔍 Search
+                </button>
+                <a href="{% url 'home' %}" class="btn-clear">
+                    ✖️ Clear
+                </a>
+            </div>
+        </form>
+        
+        <div class="results-count">
+            <p>Found <strong>{{ posts|length }}</strong> talents</p>
+        </div>
+    </div>
+    
+    <!-- Talents Grid -->
+    <div class="talents-grid">
+        {% for post in posts %}
+            <div class="talent-card">
+                <!-- Card Header -->
+                <div class="card-header">
+                    <div class="user-info">
+                        {% if post.user.useraccount.photo %}
+                            <img src="{{ post.user.useraccount.photo.url }}" alt="{{ post.user.username }}" class="user-avatar">
+                        {% else %}
+                            <div class="user-avatar-placeholder">
+                                {{ post.user.username|first|upper }}
+                            </div>
+                        {% endif %}
+                        <div>
+                            <h4>{{ post.user.username }}</h4>
+                            <span class="user-status">Available</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Card Body -->
+                <div class="card-body">
+                    <h3 class="talent-title">{{ post.name }}</h3>
+                    
+                    {% if post.category %}
+                        <span class="category-badge">{{ post.category }}</span>
+                    {% endif %}
+                    
+                    <p class="talent-description">{{ post.description|truncatewords:25 }}</p>
+                    
+                    <div class="talent-meta">
+                        <div class="price">
+                            <span class="price-label">Starting at</span>
+                            <span class="price-value">{{ post.price }} RON</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Card Footer -->
+                <div class="card-footer">
+                    <a href="#" class="btn-view">View Details →</a>
+                    <a href="{% url 'chat' post.user.id %}">💬 Contact</a>
+
+                    <div class="contact-info">
+                        {% if post.phone_number %}
+                            <span>📱 {{ post.phone_number }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="empty-state">
+                <div class="empty-icon">🔍</div>
+                <h3>No talents found</h3>
+                <p>Try adjusting your filters or browse all categories</p>
+                <a href="{% url 'home' %}" class="btn-primary">View All Talents</a>
+            </div>
+        {% endfor %}
+    </div>
+    
+</div>
+{% endblock %}

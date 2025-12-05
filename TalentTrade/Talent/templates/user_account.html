@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'user_account.css' %}">
+
+<!-- DEBUG BOX - 
+    <div style="background: yellow; padding: 20px; margin: 20px;">
+        <h3>DEBUG INFO:</h3>
+        <p>Profile exists: {{ profile }}</p>
+        <p>Photo field: {{ profile.photo }}</p>
+        {% if profile.photo %}
+            <p>Photo URL: {{ profile.photo.url }}</p>
+        {% else %}
+            <p>NO PHOTO UPLOADED</p>
+        {% endif %}
+    </div>
+END DEBUG -->
+    
+    <div class="account-container">
+        
+        <div class="profile-section">
+
+            <div class="profile-photo">
+                {% if profile.photo %}
+                    <img src="{{ profile.photo.url }}" alt="Profile Photo">
+                {% else %}
+                    <img src="{% static 'default-avatar.png' %}" alt="No Photo">
+                {% endif %}
+            </div>
+            
+
+            <div class="profile-info">
+                <h2>{{ user.username }}</h2>
+                
+                {% if profile.bio %}
+                    <p class="bio">{{ profile.bio }}</p>
+                {% else %}
+                    <p class="bio-empty">No bio yet</p>
+                {% endif %}
+                
+                {% if profile.phone_number %}
+                    <p>📱 {{ profile.phone_number }}</p>
+                {% endif %}
+                
+
+                <a href="{% url 'edit_profile' %}" class="btn btn-edit">Edit Profile</a>
+            </div>
+        </div>
+
+        <div class="account-header">
+            <h1>My Talents</h1>
+            <p>Manage your posted services</p>
+        </div>
+
+
+        <div class="stats-section">
+            <div class="stat-card">
+                <h3>{{ user_posts|length }}</h3>
+                <p>Total Talents</p>
+            </div>
+
+        </div>
+
+
+        <div class="talents-section">
+            <h2>Your Posted Talents</h2>
+            
+            {% for post in user_posts %}
+                <div class="talent-card">
+                    <div class="talent-info">
+                        <h3>{{ post.name }}</h3>
+                        <p class="category">{{ post.category }}</p>
+                        <p class="description">{{ post.description }}</p>
+                        <div class="contact-info">
+                            <span>📱 {{ post.phone_number }}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="talent-actions">
+                        <a href="{% url 'update' post.pk %}" class="btn btn-edit">Edit</a>
+                        <form method="post" action="{% url 'delete' post.pk %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" 
+                                class="btn btn-delete" 
+                                onclick="return confirm('Are you sure you want to delete {{ post.name }}?')">
+                                Delete
+                            </button>
+                        </form>
+                        
+                    </div>
+                </div>
+            {% empty %}
+                <div class="empty-state">
+                    <h3>No talents posted yet</h3>
+                    <p>Share your skills with the world!</p>
+                    <a href="{% url 'add_talent' %}" class="btn btn-primary">Post Your First Talent</a>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
